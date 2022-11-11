@@ -1,12 +1,12 @@
+"use client";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import { BiRightArrowAlt } from "react-icons/bi";
 
-type Props = {
-  searchParams: { user: string };
-};
-
-const Month = ({ searchParams: { user } }: Props) => {
+const Month = () => {
+  const searchParams = useSearchParams();
+  const user = searchParams.get("user");
   const months = [
     "1월",
     "2월",
@@ -24,7 +24,7 @@ const Month = ({ searchParams: { user } }: Props) => {
   return (
     <div className="min-h-screen text-white">
       {months.map((month, index) => (
-        <div className="p-4">
+        <div key={index} className="p-4">
           <Link
             href={{
               pathname: `/months/${index + 1}`,
