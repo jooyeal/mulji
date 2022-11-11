@@ -9,15 +9,12 @@ import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 async function getSchedules(userId: string, month: string) {
-  const res = await axios.get(
-    `${process.env.NEXT_PUBLIC_HOST_URL}/getSchedule`,
-    {
-      params: {
-        userId,
-        month,
-      },
-    }
-  );
+  const res = await axios.get(`/getSchedule`, {
+    params: {
+      userId,
+      month,
+    },
+  });
   return res.data;
 }
 

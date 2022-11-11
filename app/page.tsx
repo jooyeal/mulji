@@ -2,7 +2,7 @@ import axios from "axios";
 import UserAvatar from "../components/UserAvatar";
 
 async function getUsers(): Promise<User[] | null> {
-  const users = await axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/getUsers`);
+  const users = await axios.get(`/getUsers`);
   return users.data;
 }
 
