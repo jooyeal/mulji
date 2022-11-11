@@ -6,15 +6,7 @@ import { DateRange } from "react-date-range";
 import { ko } from "date-fns/locale";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-type Props = {
-  params: {
-    month: string;
-  };
-  searchParams: {
-    user: string;
-  };
-};
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 async function getSchedules(userId: string, month: string) {
   const res = await axios.get(
@@ -29,7 +21,11 @@ async function getSchedules(userId: string, month: string) {
   return res.data;
 }
 
-const MonthDetail = ({ params: { month }, searchParams: { user } }: Props) => {
+const MonthDetail = () => {
+  const searchParams = useSearchParams();
+  const path = usePathname();
+  const month = path?.substring(8, 9);
+  const user = searchParams.get("user");
   const toast = useToast();
   const router = useRouter();
   const currentDate = new Date();
@@ -40,11 +36,13 @@ const MonthDetail = ({ params: { month }, searchParams: { user } }: Props) => {
   });
 
   useEffect(() => {
-    const init = async () => {
-      const data = await getSchedules(user, month);
-      setSchedules(data);
-    };
-    init();
+    if (month && user) {
+      const init = async () => {
+        const data = await getSchedules(user, month);
+        setSchedules(data);
+      };
+      init();
+    }
   }, [month, user]);
   const onClick = async () => {
     try {
