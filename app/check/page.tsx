@@ -9,7 +9,7 @@ import { Calendar, DateRange } from "react-date-range";
 type Props = {};
 
 async function getAllUserSchedules(month: string) {
-  const res = await axios.get(`/check`, {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/check`, {
     params: {
       month,
     },
