@@ -11,6 +11,9 @@ module.exports = {
         "screen-3": "300vh",
         "screen-calc": "calc(100vh - 5rem)",
       },
+      fontFamily: {
+        Jua: "Jua",
+      },
     },
   },
   plugins: [],

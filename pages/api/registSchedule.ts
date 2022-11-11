@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { dateFormatToKr } from "../../utils/dateHelper";
 import prisma from "../../utils/prisma";
 
 export default async function handler(
@@ -6,16 +7,18 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.body.startDate);
+    const krStartDate = dateFormatToKr(new Date(req.body.startDate));
+    const krEndDate = dateFormatToKr(new Date(req.body.endDate));
     await prisma.schedules.create({
       data: {
         userId: req.body.userId,
-        startDate: req.body.startDate,
-        endDate: req.body.endDate,
+        startDate: krStartDate,
+        endDate: krEndDate,
       },
     });
-    res.status(200);
+    res.status(200).end();
   } catch (e) {
+    console.log(e);
     res.status(500).json(e);
   }
 }
